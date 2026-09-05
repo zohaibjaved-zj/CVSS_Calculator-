@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CVSS 3.1 Calculator</title>
+<meta name="description" content="A CVSS 3.1 Base, Temporal, and Environmental score calculator with vector string import/export and PDF reporting." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to calculator</a>
+
+<div class="topbar">
+  <div class="brand">
+    <span class="brand-mark">CVSS</span>
+    <span class="brand-sub">3.1 Vulnerability Scoring</span>
+  </div>
+  <button class="icon-btn" id="themeToggle" type="button" aria-label="Toggle color theme">🌙 Dark</button>
+</div>
+
+<main class="page" id="main">
+
+  <section class="panel hero-panel">
+    <div class="hero">
+      <div class="score-dial">
+        <div class="score-value" id="scoreValue">0.0</div>
+        <div class="score-label" id="scoreLabel">Base Score</div>
+        <span class="severity-pill none" id="severityPill">None</span>
+      </div>
+      <div class="gauge-wrap">
+        <div class="gauge-track">
+          <div class="gauge-zone none"></div>
+          <div class="gauge-zone low"></div>
+          <div class="gauge-zone medium"></div>
+          <div class="gauge-zone high"></div>
+          <div class="gauge-zone critical"></div>
+          <div class="gauge-marker" id="gaugeMarker"></div>
+        </div>
+        <div class="gauge-scale">
+          <span>0</span><span>2</span><span>4</span><span>6</span><span>8</span><span>10</span>
+        </div>
+        <div class="subscores">
+          <span class="subscore">Base <b id="subBase">0.0</b></span>
+          <span class="subscore">Temporal <b id="subTemporal">0.0</b></span>
+          <span class="subscore">Environmental <b id="subEnvironmental">0.0</b></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="vector-row">
+      <code class="vector-string" id="vectorString">CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:N</code>
+      <button class="btn" id="copyVectorBtn" type="button">Copy vector</button>
+      <button class="btn" id="shareBtn" type="button">Copy share link</button>
+      <button class="btn" id="importToggle" type="button">Load vector</button>
+    </div>
+    <div class="import-row" id="importRow">
+      <input type="text" id="importInput" placeholder="Paste a CVSS:3.1/... vector string" />
+      <button class="btn primary" id="importApply" type="button">Apply</button>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="tabs" role="tablist">
+      <button class="tab active" data-group="base" role="tab">Base<span class="tab-score">0.0</span></button>
+      <button class="tab" data-group="temporal" role="tab">Temporal<span class="tab-score">0.0</span></button>
+      <button class="tab" data-group="environmental" role="tab">Environmental<span class="tab-score">0.0</span></button>
+    </div>
+
+    <div class="tab-panel active" id="panel-base"></div>
+    <div class="tab-panel" id="panel-temporal"></div>
+    <div class="tab-panel" id="panel-environmental"></div>
+
+    <div class="actions">
+      <button class="btn" id="resetBtn" type="button">Reset</button>
+      <button class="btn primary" id="pdfBtn" type="button">Download PDF report</button>
+    </div>
+  </section>
+
+  <section class="panel">
+    <details class="about">
+      <summary>About CVSS 3.1</summary>
+      <div class="about-body">
+        <p>
+          The Common Vulnerability Scoring System (CVSS) is an open framework for rating the
+          severity of software vulnerabilities on a 0–10 scale. Version 3.1 is maintained by
+          <a href="https://www.first.org/cvss/" target="_blank" rel="noopener">FIRST.org</a>.
+        </p>
+        <ul>
+          <li><strong>Base metrics</strong> capture the intrinsic qualities of a vulnerability that stay constant over time and across environments.</li>
+          <li><strong>Temporal metrics</strong> layer on factors that change over time, such as exploit maturity and patch availability.</li>
+          <li><strong>Environmental metrics</strong> let an organization adjust the score to its own deployment, weighting confidentiality, integrity, and availability requirements.</li>
+        </ul>
+        <p>
+          Every score is backed by a vector string — a compact, shareable encoding of the metric
+          choices behind it — which this tool generates, parses, and lets you copy or load directly.
+        </p>
+      </div>
+    </details>
+  </section>
+
+</main>
+
+<footer>
+  Developed by Muhammad Zohaib · <a href="https://github.com/zohaibjaved-zj" target="_blank" rel="noopener">GitHub</a>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
